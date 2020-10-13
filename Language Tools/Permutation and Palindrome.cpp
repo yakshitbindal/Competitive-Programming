@@ -52,7 +52,60 @@ Example case 4: Applying the permutation 1, 2, 4, 3 on s results in t = "abba", 
 
 #include<bits/stdc++.h>
 using namespace std;
+
+void permutationPrint(string str)
+{
+    map<char,vector<int>> index;
+    for(int i=0;i<str.length();i++)
+    {
+        index[str[i]].push_back(i);
+    }
+    int odd_freq=0;
+    map<char,vector<int>>::iterator itr;
+    for(itr=index.begin();itr!=index.end();itr++)
+    {
+        if((itr->second.size()%2)!=0)
+            odd_freq++;
+    }
+    if(odd_freq>1)
+    {
+        cout<<"-1"<<endl;
+        return;
+    }
+    int ans[str.length()];
+    int i=0;
+    int j=str.length()-1;
+    for(itr=index.begin();itr!=index.end();itr++)
+    {
+        for(int k=0;k<((itr->second).size());k+=2)
+        {
+            if( ((itr->second).size()-j) == 1 )
+            {
+                ans[str.length()/2]=(itr->second)[k];
+                continue;
+            }
+            ans[i]=(itr->second)[k];
+            ans[j]=(itr->second)[k+1];
+            i++;
+            j--;
+        }
+    }
+    for(int i=0;i<str.size();i++)
+    {
+        cout<<ans[i]+1<<" ";
+    }
+    return;
+}
+
 int main()
 {
-
+    int t;
+    cin>>t;
+    while(t--)
+    {
+        string str;
+        cin>>str;
+        permutationPrint(str);
+        cout<<endl;
+    }
 }
